@@ -8,6 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^0.17.1
   sliding_up_panel: 
     git:
       url: git://github.com/n-keist/sliding_up_panel.git
@@ -17,6 +18,8 @@ dev_dependencies:
     sdk: flutter
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/heart-black.svg
   fonts:
     - family: Montserrat
       fonts:

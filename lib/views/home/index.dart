@@ -6,6 +6,7 @@ import 'package:amlive/views/home/widgets/send_button.dart';
 import 'package:amlive/views/home/widgets/textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomeViewIndex extends StatefulWidget {
@@ -18,6 +19,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   PanelController _panelController = new PanelController();
   PageController _pageController = new PageController();
   AnimationController _animationController;
+  ScrollController _scrollController = new ScrollController();
 
   Widget _chat = Container();
   Widget _stream = Container();
@@ -30,6 +32,12 @@ class _HomeViewIndexState extends State<HomeViewIndex>
       duration: Duration(milliseconds: 200),
       value: 0,
     );
+    _scrollController.addListener(() {
+      if (_panelController.isPanelOpen &&
+          _scrollController.position.pixels <= 0) {
+        _panelController.close();
+      }
+    });
 
     setState(() {
       _chat = Center(
@@ -60,6 +68,10 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('amlive.me'),
+        centerTitle: true,
+      ),
       body: SlidingUpPanel(
         controller: _panelController,
         borderRadius: BorderRadius.only(
@@ -96,11 +108,22 @@ class _HomeViewIndexState extends State<HomeViewIndex>
           children: <Widget>[
             Expanded(
               flex: 10,
-              child: Text(
-                '#noko',
-                style: TextStyle(
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16.0,
+              child: RichText(
+                text: TextSpan(
+                  style: TextStyle(
+                    fontSize: 18.0,
+                    color: Colors.black,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  children: [
+                    TextSpan(text: '#noko'),
+                    TextSpan(
+                      text: ' is chatting',
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -161,6 +184,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
         ),
         Expanded(
           child: ListView.builder(
+            controller: _scrollController,
             itemCount: 20,
             reverse: false,
             padding: const EdgeInsets.only(
@@ -180,42 +204,37 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   }
 
   Widget _body() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Stack(
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 30,
-            bottom: 10,
-            left: 8.0,
-          ),
-          child: Text(
-            'amlive.me',
-            style: TextStyle(
-              fontSize: 24.0,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 2.0,
-            ),
-            textAlign: TextAlign.start,
-          ),
-        ),
-        Expanded(
-          child: PageView.builder(
-            itemCount: 2,
-            controller: _pageController,
-            itemBuilder: (buildContext, index) {
-              return Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(
-                      'https://picsum.photos/624/832',
-                    ),
-                    alignment: Alignment.topCenter,
+        PageView.builder(
+          itemCount: 2,
+          controller: _pageController,
+          itemBuilder: (buildContext, index) {
+            return Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(
+                    'https://picsum.photos/624/832',
                   ),
+                  alignment: Alignment.topCenter,
                 ),
-              );
-            },
+              ),
+            );
+          },
+        ),
+        Positioned(
+          right: 8.0,
+          bottom: (MediaQuery.of(context).size.height * 0.39) + 90,
+          child: FloatingActionButton(
+            backgroundColor: Theme.of(context).primaryColor,
+            foregroundColor: Color(0xff32292f),
+            child: SvgPicture.asset(
+              'assets/icons/heart-black.svg',
+              height: 20,
+              width: 20,
+              color: Color(0xff32292f),
+            ),
+            onPressed: () => null,
           ),
         ),
       ],

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HomeWidgetSendButton extends StatelessWidget {
-  Function onPressed;
+  final Function onPressed;
 
   HomeWidgetSendButton({this.onPressed});
 
@@ -9,6 +9,9 @@ class HomeWidgetSendButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       padding: const EdgeInsets.all(0),
+      visualDensity: VisualDensity(
+        horizontal: 0.0,
+      ),
       onPressed: onPressed ?? () => null,
       child: Text(
         'Send',
