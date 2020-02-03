@@ -60,10 +60,6 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('amlive'),
-        centerTitle: true,
-      ),
       body: SlidingUpPanel(
         controller: _panelController,
         borderRadius: BorderRadius.only(
@@ -184,21 +180,45 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   }
 
   Widget _body() {
-    return PageView.builder(
-      itemCount: 2,
-      controller: _pageController,
-      itemBuilder: (buildContext, index) {
-        return Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: NetworkImage(
-                'https://loremflickr.com/480/400/cat',
-              ),
-              alignment: Alignment.topCenter,
-            ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(
+            top: 30,
+            bottom: 10,
+            left: 8.0,
           ),
-        );
-      },
+          child: Text(
+            'amlive.me',
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 2.0,
+            ),
+            textAlign: TextAlign.start,
+          ),
+        ),
+        Expanded(
+          child: PageView.builder(
+            itemCount: 2,
+            controller: _pageController,
+            itemBuilder: (buildContext, index) {
+              return Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(
+                      'https://picsum.photos/624/832',
+                    ),
+                    alignment: Alignment.topCenter,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
     );
   }
 
