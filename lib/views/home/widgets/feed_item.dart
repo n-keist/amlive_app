@@ -20,7 +20,7 @@ class HomeWidgetFeedItem extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Container(
-                width: MediaQuery.of(context).size.width * 0.42,
+                width: MediaQuery.of(context).size.width * 0.41,
                 height: 128,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(

@@ -15,7 +15,7 @@ class _HomeWidgetHomeState extends State<HomeWidgetHome> {
     return SafeArea(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
-          vertical: 8.0,
+          vertical: 32.0,
           horizontal: 8.0,
         ),
         child: Column(
