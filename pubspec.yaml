@@ -8,7 +8,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_svg: ^0.17.1
+  flutter_feather_icons: ^1.0.3
   sliding_up_panel: 
     git:
       url: git://github.com/n-keist/sliding_up_panel.git

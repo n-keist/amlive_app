@@ -1,12 +1,10 @@
 import 'dart:io';
 
-import 'package:amlive/views/home/widgets/badge.dart';
-import 'package:amlive/views/home/widgets/message.dart';
-import 'package:amlive/views/home/widgets/send_button.dart';
-import 'package:amlive/views/home/widgets/textfield.dart';
+import 'package:amlive/views/home/widgets/home.dart';
+import 'package:amlive/views/home/widgets/panel.dart';
+import 'package:amlive/views/home/widgets/streamview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class HomeViewIndex extends StatefulWidget {
@@ -21,8 +19,12 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   AnimationController _animationController;
   ScrollController _scrollController = new ScrollController();
 
+  List<Widget> _pages = [];
+
   Widget _chat = Container();
   Widget _stream = Container();
+
+  double _minHeight;
 
   @override
   void initState() {
@@ -39,37 +41,44 @@ class _HomeViewIndexState extends State<HomeViewIndex>
       }
     });
 
-    setState(() {
-      _chat = Center(
-        child: Platform.isIOS
-            ? CupertinoActivityIndicator()
-            : SizedBox(
-                height: 15,
-                width: 15,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
+    _pageController.addListener(_pageScrollListener);
+
+    setState(
+      () {
+        _chat = Center(
+          child: Platform.isIOS
+              ? CupertinoActivityIndicator()
+              : SizedBox(
+                  height: 15,
+                  width: 15,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                  ),
                 ),
-              ),
-      );
-      _stream = Center(
-        child: Platform.isIOS
-            ? CupertinoActivityIndicator()
-            : SizedBox(
-                height: 15,
-                width: 15,
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.5,
+        );
+        _stream = Center(
+          child: Platform.isIOS
+              ? CupertinoActivityIndicator()
+              : SizedBox(
+                  height: 15,
+                  width: 15,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2.5,
+                  ),
                 ),
-              ),
-      );
-    });
+        );
+      },
+    );
+
+    setState(() => _pages.add(_buildHome()));
+    setState(() => _pages.add(HomeViewStreamView()));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('amlive.me'),
+        title: Text('amlive'),
         centerTitle: true,
       ),
       body: SlidingUpPanel(
@@ -80,7 +89,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
         ),
         color: ThemeData.light().scaffoldBackgroundColor,
         defaultPanelState: PanelState.CLOSED,
-        minHeight: MediaQuery.of(context).size.height * 0.39,
+        minHeight: _minHeight ?? 0,
         maxHeight: MediaQuery.of(context).size.height * 0.77,
         isDraggable: true,
         panelSnapping: true,
@@ -98,108 +107,10 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   }
 
   Widget _panel() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Expanded(
-              flex: 10,
-              child: RichText(
-                text: TextSpan(
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    color: Colors.black,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  children: [
-                    TextSpan(text: '#noko'),
-                    TextSpan(
-                      text: ' is chatting',
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: IconButton(
-                icon: RotationTransition(
-                  turns: Tween(
-                    begin: 0.0,
-                    end: 0.5,
-                  ).animate(_animationController),
-                  child: Icon(Icons.arrow_upward),
-                ),
-                onPressed: _togglePanel,
-              ),
-            ),
-          ],
-        ),
-        Transform.translate(
-          offset: Offset(0, -10),
-          child: Wrap(
-            spacing: 4.0,
-            children: <Widget>[
-              HomeWidgetBadge(
-                Colors.green[100],
-                Colors.green,
-                '2.3k',
-                icon: Icons.remove_red_eye,
-              ),
-              HomeWidgetBadge(
-                Colors.blue[100],
-                Colors.blue,
-                '12.3k',
-                icon: Icons.person,
-              ),
-            ],
-          ),
-        ),
-        Container(
-          height: 35.0,
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Expanded(
-                flex: 8,
-                child: HomeWidgetTextField(),
-              ),
-              Expanded(
-                flex: 2,
-                child: HomeWidgetSendButton(),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(
-          height: 10,
-        ),
-        Expanded(
-          child: ListView.builder(
-            controller: _scrollController,
-            itemCount: 20,
-            reverse: false,
-            padding: const EdgeInsets.only(
-              bottom: 20,
-            ),
-            itemBuilder: (buildContext, index) {
-              return HomeWidgetMessage(
-                'https://loremflickr.com/100/100/cat',
-                'k3vin$index',
-                'brudi nicer stream ',
-              );
-            },
-          ),
-        ),
-      ],
+    return HomeWidgetPanel(
+      animationController: _animationController,
+      scrollController: _scrollController,
+      panelController: _panelController,
     );
   }
 
@@ -207,55 +118,28 @@ class _HomeViewIndexState extends State<HomeViewIndex>
     return Stack(
       children: <Widget>[
         PageView.builder(
-          itemCount: 2,
+          itemCount: _pages.length,
           controller: _pageController,
-          itemBuilder: (buildContext, index) {
-            return Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: NetworkImage(
-                    'https://picsum.photos/624/832',
-                  ),
-                  alignment: Alignment.topCenter,
-                ),
-              ),
-            );
+          itemBuilder: (_buildContext, index) {
+            return _pages[index];
           },
-        ),
-        Positioned(
-          right: 8.0,
-          bottom: (MediaQuery.of(context).size.height * 0.39) + 90,
-          child: FloatingActionButton(
-            backgroundColor: Theme.of(context).primaryColor,
-            foregroundColor: Color(0xff32292f),
-            child: SvgPicture.asset(
-              'assets/icons/heart-black.svg',
-              height: 20,
-              width: 20,
-              color: Color(0xff32292f),
-            ),
-            onPressed: () => null,
-          ),
         ),
       ],
     );
   }
 
   void _onPanelSlide(double value) {
-    double max = 0.5;
-    _animationController.value = value / max;
+    _animationController.value = value / 0.5;
   }
 
-  void _togglePanel() {
-    if (_panelController.isAttached) {
-      if (_panelController.isPanelClosed) {
-        _panelController.animatePanelToPosition(1.0);
-        _animationController.forward();
-      } else {
-        _panelController.animatePanelToPosition(0.0);
-        _animationController.reverse();
-      }
-    }
+  void _pageScrollListener() {
+    double max = MediaQuery.of(context).size.height * 0.39,
+        offset = _pageController.offset;
+    setState(() => _minHeight = offset < max ? offset >= 0 ? offset : 0 : max);
+  }
+
+  Widget _buildHome() {
+    return HomeWidgetHome();
   }
 
   @override
