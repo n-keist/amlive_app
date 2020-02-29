@@ -1,8 +1,9 @@
 import 'dart:io';
 
+import 'package:amlive/views/home/publishview.dart';
 import 'package:amlive/views/home/widgets/home.dart';
 import 'package:amlive/views/home/widgets/panel.dart';
-import 'package:amlive/views/home/widgets/streamview.dart';
+import 'package:amlive/views/home/streamview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
@@ -16,7 +17,9 @@ class HomeViewIndex extends StatefulWidget {
 class _HomeViewIndexState extends State<HomeViewIndex>
     with SingleTickerProviderStateMixin {
   PanelController _panelController = new PanelController();
-  PageController _pageController = new PageController();
+  PageController _pageController = new PageController(
+    initialPage: 1,
+  );
   AnimationController _animationController;
   ScrollController _scrollController = new ScrollController();
 
@@ -73,6 +76,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
       },
     );
 
+    setState(() => _pages.add(HomeViewPublishView()));
     setState(() => _pages.add(_buildHome()));
     setState(() => _pages.add(HomeViewStreamView()));
   }
