@@ -6,6 +6,7 @@ import 'package:amlive/views/home/widgets/streamview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class HomeViewIndex extends StatefulWidget {
   @override
@@ -21,6 +22,8 @@ class _HomeViewIndexState extends State<HomeViewIndex>
 
   List<Widget> _pages = [];
 
+  double _indexOpacity = 0.0;
+
   Widget _chat = Container();
   Widget _stream = Container();
 
@@ -31,7 +34,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 200),
+      duration: Duration(milliseconds: 100),
       value: 0,
     );
     _scrollController.addListener(() {
@@ -80,6 +83,18 @@ class _HomeViewIndexState extends State<HomeViewIndex>
       appBar: AppBar(
         title: Text('amlive'),
         centerTitle: true,
+        leading: AnimatedOpacity(
+          opacity: _indexOpacity,
+          duration: Duration(milliseconds: 200),
+          child: IconButton(
+            icon: Icon(FeatherIcons.arrowLeft),
+            onPressed: () => _pageController.animateToPage(
+              0,
+              duration: new Duration(milliseconds: 200),
+              curve: Curves.easeOut,
+            ),
+          ),
+        ),
       ),
       body: SlidingUpPanel(
         controller: _panelController,
@@ -136,6 +151,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
     double max = MediaQuery.of(context).size.height * 0.39,
         offset = _pageController.offset;
     setState(() => _minHeight = offset < max ? offset >= 0 ? offset : 0 : max);
+    setState(() => _indexOpacity = _pageController.page == 0 ? 0 : 1);
   }
 
   Widget _buildHome() {

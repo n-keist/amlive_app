@@ -26,7 +26,7 @@ ThemeData theme = ThemeData(
     brightness: Brightness.light,
     elevation: 0,
     textTheme: TextTheme(
-      title: TextStyle(
+      headline6: TextStyle(
         letterSpacing: 2.9,
         color: Color(0xff32292f),
         fontWeight: FontWeight.w600,

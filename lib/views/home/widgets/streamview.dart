@@ -8,15 +8,14 @@ class HomeViewStreamView extends StatefulWidget {
 class _HomeViewStreamViewState extends State<HomeViewStreamView> {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(0),
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.2,
+      width: MediaQuery.of(context).size.width,
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height * 0.5,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage('https://loremflickr.com/600/600'),
-            fit: BoxFit.contain,
+            image: NetworkImage('https://loremflickr.com/320/240'),
+            fit: BoxFit.cover,
           ),
         ),
       ),
