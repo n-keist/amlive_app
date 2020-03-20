@@ -1,39 +1,23 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_rtmp (0.0.1):
-    - Flutter
-    - LFLiveKit
-    - MJExtension
   - LFLiveKit (2.6)
-  - MJExtension (3.2.1)
-  - permission_handler (3.3.0):
-    - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_rtmp (from `.symlinks/plugins/flutter_rtmp/ios`)
-  - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - LFLiveKit
 
 SPEC REPOS:
   trunk:
     - LFLiveKit
-    - MJExtension
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_rtmp:
-    :path: ".symlinks/plugins/flutter_rtmp/ios"
-  permission_handler:
-    :path: ".symlinks/plugins/permission_handler/ios"
 
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_rtmp: e17cd3f93446134576e5b8a37174d8b5f59acdd9
   LFLiveKit: 2219563721f8aa0f188effc3395a06e2d53b23f2
-  MJExtension: 635f2c663dcb1bf76fa4b715b2570a5710aec545
-  permission_handler: 67637977b227d62d46bfbf524f335f8568de5a73
 
-PODFILE CHECKSUM: 083258d7f5e80b42ea9bfee905fe93049bc04c64
+PODFILE CHECKSUM: 5fbdc8b38cc9ef20d738b6ad94da9eb2f5aaedf3
 
 COCOAPODS: 1.8.4

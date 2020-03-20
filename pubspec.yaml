@@ -9,7 +9,6 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_feather_icons: ^1.0.3
-  flutter_rtmp: ^0.1.4
   sliding_up_panel: 
     git:
       url: git://github.com/n-keist/sliding_up_panel.git

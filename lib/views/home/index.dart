@@ -93,7 +93,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
           child: IconButton(
             icon: Icon(FeatherIcons.arrowLeft),
             onPressed: () => _pageController.animateToPage(
-              0,
+              1,
               duration: new Duration(milliseconds: 200),
               curve: Curves.easeOut,
             ),
@@ -153,9 +153,9 @@ class _HomeViewIndexState extends State<HomeViewIndex>
 
   void _pageScrollListener() {
     double max = MediaQuery.of(context).size.height * 0.39,
-        offset = _pageController.offset;
+        offset = _pageController.offset - 375;
     setState(() => _minHeight = offset < max ? offset >= 0 ? offset : 0 : max);
-    setState(() => _indexOpacity = _pageController.page == 0 ? 0 : 1);
+    setState(() => _indexOpacity = _pageController.page > 1 ? 1 : 0);
   }
 
   Widget _buildHome() {
