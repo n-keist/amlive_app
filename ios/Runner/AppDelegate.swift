@@ -7,8 +7,13 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    let nativeViewFactory = NativeViewFactory()
-    registrar(forPlugin: "Runner").register(nativeViewFactory, withId: "NativeView")
+    
+    //MARK: - Publishing View
+    
+    let publishingViewFactory = PublishingViewFactory()
+    registrar(forPlugin: "Runner").register(publishingViewFactory, withId: "PublishingView")
+    
+    //MARK: - Media Permission Channel
     
     let controller : FlutterViewController  = window?.rootViewController as! FlutterViewController
     
@@ -18,11 +23,14 @@ import Flutter
     )
     
     mediaPermissionChannel.setMethodCallHandler { (call, result) in
-        let mediaPermissionHandler: MediaPermissionHandler = MediaPermissionHandler()
-        result([
-            "video": mediaPermissionHandler.requestAccessVideo(),
-            "audio": mediaPermissionHandler.requestAccessAudio(),
-        ])
+        if(call.method == "requestAccess") {
+            let mediaPermissionHandler: MediaPermissionHandler = MediaPermissionHandler()
+            result([
+                "video": mediaPermissionHandler.requestAccessVideo(),
+                "audio": mediaPermissionHandler.requestAccessAudio(),
+            ])
+        }
+        
     }
     
     GeneratedPluginRegistrant.register(with: self)
