@@ -17,6 +17,8 @@
 		D1B04FA3240E502B00CDBFFD /* PublishingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B04FA2240E502B00CDBFFD /* PublishingView.swift */; };
 		D1E28EC6240B004F000483CA /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 004676F26E0F2669CD8151C7 /* Pods_Runner.framework */; };
 		D1E28EC7240B004F000483CA /* Pods_Runner.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 004676F26E0F2669CD8151C7 /* Pods_Runner.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D1F5366824291E6F00D1E1C4 /* LiveViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5366724291E6F00D1E1C4 /* LiveViewFactory.swift */; };
+		D1F5366A24291F6100D1E1C4 /* LiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F5366924291F6100D1E1C4 /* LiveView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +55,8 @@
 		CA899526EBD56BA213950E6F /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		D12DAAE1242553B100A8CF2B /* MediaPermissionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPermissionHandler.swift; sourceTree = "<group>"; };
 		D1B04FA2240E502B00CDBFFD /* PublishingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublishingView.swift; sourceTree = "<group>"; };
+		D1F5366724291E6F00D1E1C4 /* LiveViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewFactory.swift; sourceTree = "<group>"; };
+		D1F5366924291F6100D1E1C4 /* LiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +125,8 @@
 				74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */,
 				D1B04FA2240E502B00CDBFFD /* PublishingView.swift */,
 				D12DAAE1242553B100A8CF2B /* MediaPermissionHandler.swift */,
+				D1F5366724291E6F00D1E1C4 /* LiveViewFactory.swift */,
+				D1F5366924291F6100D1E1C4 /* LiveView.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -286,6 +292,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1F5366A24291F6100D1E1C4 /* LiveView.swift in Sources */,
+				D1F5366824291E6F00D1E1C4 /* LiveViewFactory.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				D12DAAE2242553B100A8CF2B /* MediaPermissionHandler.swift in Sources */,

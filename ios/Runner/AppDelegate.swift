@@ -7,15 +7,12 @@ import Flutter
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
-    
-    //MARK: - Publishing View
-    
-    let publishingViewFactory = PublishingViewFactory()
-    registrar(forPlugin: "Runner").register(publishingViewFactory, withId: "PublishingView")
-    
     //MARK: - Media Permission Channel
     
     let controller : FlutterViewController  = window?.rootViewController as! FlutterViewController
+    
+    let liveViewFactory = LiveViewFactory(controller: controller)
+    registrar(forPlugin: "Runner").register(liveViewFactory, withId: "LiveView")
     
     let mediaPermissionChannel = FlutterMethodChannel(
         name: "media.permission",

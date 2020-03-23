@@ -22,6 +22,7 @@ public class PublishingView: NSObject, LFLiveSessionDelegate, FlutterPlatformVie
     var containerView: UIView = {
         let containerView = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
         containerView.backgroundColor = UIColor.clear
+        containerView.autoresizingMask = [UIView.AutoresizingMask.flexibleHeight, UIView.AutoresizingMask.flexibleWidth]
         return containerView
     }()
     
@@ -31,9 +32,26 @@ public class PublishingView: NSObject, LFLiveSessionDelegate, FlutterPlatformVie
     init(_ frame: CGRect, viewId: Int64, args: Any?) {
         self.frame = frame
         self.viewId = viewId
+        super.init()
+        self.streamInit()
+    }
+    
+    func streamInit() -> Void {
+        session.delegate = self
+        session.preView = containerView
     }
     
     public func view() -> UIView {
+        /*
+        let view: UIView = {
+            let containerView = UIView(frame: frame)
+            containerView.backgroundColor = UIColor.clear
+            containerView.autoresizingMask = [UIView.AutoresizingMask.flexibleHeight, UIView.AutoresizingMask.flexibleWidth]
+            return containerView
+        }()
+        
+        view.addSubview(containerView)*/
+        
         return self.containerView
     }
     
