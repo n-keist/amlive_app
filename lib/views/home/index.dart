@@ -139,9 +139,7 @@ class _HomeViewIndexState extends State<HomeViewIndex>
         PageView.builder(
           itemCount: _pages.length,
           controller: _pageController,
-          itemBuilder: (_buildContext, index) {
-            return _pages[index];
-          },
+          itemBuilder: (_buildContext, index) => _pages[index],
         ),
       ],
     );
@@ -152,9 +150,11 @@ class _HomeViewIndexState extends State<HomeViewIndex>
   }
 
   void _pageScrollListener() {
+    const width = 375;
     double max = MediaQuery.of(context).size.height * 0.39,
-        offset = _pageController.offset - 375;
-    setState(() => _minHeight = offset < max ? offset >= 0 ? offset : 0 : max);
+        offset = _pageController.offset - width;
+    setState(() =>
+        _minHeight = offset < max ? offset >= 0 ? offset : offset.abs() : max);
     setState(() => _indexOpacity = _pageController.page > 1 ? 1 : 0);
   }
 

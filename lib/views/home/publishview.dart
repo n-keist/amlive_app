@@ -5,6 +5,7 @@ import 'package:amlive/views/home/widgets/stream_control.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_feather_icons/flutter_feather_icons.dart';
 
 class HomeViewPublishView extends StatefulWidget {
   @override
@@ -37,7 +38,7 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
       setState(() {});
       if (videoAccess) {
         Timer timer;
-        timer = Timer(Duration(milliseconds: 100), () async {
+        timer = Timer(Duration(milliseconds: 500), () async {
           _uiView = UiKitView(
             viewType: 'LiveView',
             onPlatformViewCreated: (_) {
@@ -56,26 +57,6 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
     double height = MediaQuery.of(context).size.height;
     return Stack(
       children: <Widget>[
-        Positioned(
-          top: height * 0.85 - MediaQuery.of(context).padding.bottom,
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 4.0,
-            ),
-            scrollDirection: Axis.horizontal,
-            child: Wrap(
-              spacing: 3.5,
-              children: <Widget>[
-                HomeWidgetStreamControl(
-                  Icon(
-                    Icons.settings,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
         Container(
           child: SizedBox(
             height: 400,
@@ -89,6 +70,47 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
                     width: 350,
                     child: _uiView,
                   ),
+          ),
+        ),
+        Positioned(
+          top: height * 0.355,
+          right: 0,
+          child: Container(
+            height: 40,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 8,
+              vertical: 5,
+            ),
+            margin: const EdgeInsets.only(
+              right: 8.0,
+            ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(8.0),
+              ),
+            ),
+            child: Row(
+              children: <Widget>[
+                Text(
+                  'Go Live',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                Container(
+                  width: 15,
+                  height: 15,
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ],
