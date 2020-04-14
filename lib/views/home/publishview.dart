@@ -27,6 +27,7 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
   );
 
   Widget _liveAction;
+  MethodChannel _methodChannel;
 
   @override
   void initState() {
@@ -44,6 +45,7 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
           _uiView = UiKitView(
             viewType: 'LiveView',
             onPlatformViewCreated: (_) {
+              _methodChannel = MethodChannel('amlive.live');
               timer.cancel();
               timer = null;
             },
@@ -149,8 +151,7 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
 
   void _initializeStream() async {
     setState(() => _liveAction = _stopLiveButton());
-    MethodChannel methodChannel = MethodChannel('amlive.live');
-    dynamic result = await methodChannel.invokeMethod('initialize');
+    dynamic result = await _methodChannel?.invokeMethod('initialize');
     print(result);
   }
 
