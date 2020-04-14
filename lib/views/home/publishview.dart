@@ -26,6 +26,8 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
           ),
   );
 
+  Widget _liveAction;
+
   @override
   void initState() {
     super.initState();
@@ -75,45 +77,84 @@ class _HomeViewPublishViewState extends State<HomeViewPublishView> {
         Positioned(
           top: height * 0.355,
           right: 0,
-          child: Container(
-            height: 40,
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-              vertical: 5,
-            ),
-            margin: const EdgeInsets.only(
-              right: 8.0,
-            ),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8.0),
-              ),
-            ),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  'Go Live',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  width: 5,
-                ),
-                Container(
-                  width: 15,
-                  height: 15,
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    shape: BoxShape.circle,
-                  ),
-                ),
-              ],
-            ),
-          ),
+          child: _liveAction ?? _goLiveButton(),
         ),
       ],
     );
+  }
+
+  Widget _stopLiveButton() => InkWell(
+        child: Container(
+          height: 40,
+          width: 40,
+          padding: const EdgeInsets.all(10.0),
+          decoration: BoxDecoration(
+            color: Colors.red,
+            shape: BoxShape.circle,
+          ),
+          margin: const EdgeInsets.only(
+            right: 8.0,
+          ),
+          child: Center(
+            child: Icon(
+              FeatherIcons.x,
+              color: Colors.white,
+              size: 20,
+            ),
+          ),
+        ),
+        onTap: _stopStream,
+      );
+
+  Widget _goLiveButton() => InkWell(
+        child: Container(
+          height: 40,
+          padding: const EdgeInsets.symmetric(
+            horizontal: 8,
+            vertical: 5,
+          ),
+          margin: const EdgeInsets.only(
+            right: 8.0,
+          ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.all(
+              Radius.circular(8.0),
+            ),
+          ),
+          child: Row(
+            children: <Widget>[
+              Text(
+                'Go Live',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Container(
+                width: 15,
+                height: 15,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ],
+          ),
+        ),
+        onTap: _initializeStream,
+      );
+
+  void _initializeStream() async {
+    setState(() => _liveAction = _stopLiveButton());
+    MethodChannel methodChannel = MethodChannel('amlive.live');
+    dynamic result = await methodChannel.invokeMethod('initialize');
+    print(result);
+  }
+
+  void _stopStream() {
+    setState(() => _liveAction = _goLiveButton());
   }
 }

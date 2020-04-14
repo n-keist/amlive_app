@@ -31,8 +31,6 @@ public class LiveView: NSObject, FlutterPlatformView, LFLiveSessionDelegate {
         
         self.container = {
             let containerView = UIView(frame: frame)
-            //containerView.backgroundColor = UIColor.clear
-            //containerView.autoresizingMask = [UIView.AutoresizingMask.flexibleHeight, UIView.AutoresizingMask.flexibleWidth]
             return containerView
         }()
         
@@ -44,7 +42,12 @@ public class LiveView: NSObject, FlutterPlatformView, LFLiveSessionDelegate {
         session.preView = container
         
         channel.setMethodCallHandler { (call: FlutterMethodCall, result: FlutterResult) in
-            
+            if call.method == "initialize" {
+                let stream = LFLiveStreamInfo()
+                stream.url = "rtmp://192.168.178.45:1935/live/noko"
+                self.session.startLive(stream)
+                result(true)
+            }
         }
     }
     
