@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum TopicGradient { GREENBLUE, PURPLE, YELLOW, ORANGE }
+enum TopicGradient { GREENBLUE, PURPLE, YELLOW, ORANGE, GREEN }
 
 class TopicGradientImp {
   Map<TopicGradient, List<Color>> gradients = {
@@ -20,5 +20,9 @@ class TopicGradientImp {
       Color(0xfffe8c00),
       Color(0xfff83600),
     ],
+    TopicGradient.GREEN: [
+      Color(0xff134e5e),
+      Color(0xff71b280),
+    ]
   };
 }
