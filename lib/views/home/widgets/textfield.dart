@@ -12,7 +12,7 @@ class HomeWidgetTextField extends StatelessWidget {
       controller: textEditingController,
       decoration: InputDecoration(
         counterText: '',
-        hintText: placeholder ?? 'Chat with #noko',
+        hintText: placeholder ?? 'Chat with #',
         hintStyle: TextStyle(
           fontSize: 12.0,
           fontWeight: FontWeight.w600,
