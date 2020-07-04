@@ -9,13 +9,12 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_feather_icons: ^1.0.3
-  sliding_up_panel: 
+  hive: ^1.4.1+1
+  hive_flutter: ^0.3.0+2
+  sliding_up_panel:
     git:
       url: git://github.com/n-keist/sliding_up_panel.git
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
 flutter:
   uses-material-design: true
   assets:
